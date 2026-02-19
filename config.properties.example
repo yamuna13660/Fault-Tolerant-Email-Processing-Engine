@@ -1,0 +1,4 @@
+email.username=your_email
+email.password=your_app_password_here
+smtp.host=smtp.gmail.com
+smtp.port=587

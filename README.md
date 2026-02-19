@@ -41,16 +41,16 @@ docs/ → Proof screenshots
 
 ### 1️ Jobs before processing
 Shows all jobs in `PENDING` state  
-![Before](database_queue_init.png)
+![Before](docs/database_queue_init.png)
 
 ### 2️ Worker processing with retry & crash simulation
-![Worker Running](error_handling_logs.png)
+![Worker Running](docs/error_handling_logs.png)
 
 ### 3 Job metrics (latency, retries, final state)
-![Metrics](job_performance_metrics.png)
+![Metrics](docs/job_performance_metrics.png)
 
 ### 4 Multiple workers running safely
-![Concurrency](multi_worker_concurrency.png)
+![Concurrency](docs/multi_worker_concurrency.png)
 
 
 

@@ -10,7 +10,7 @@ public class UserService {
         try {
             con = DBConnection.getConnection();
             
-            // ✅ FIX: Turn off auto-commit so we control the transaction
+     
             con.setAutoCommit(false);
 
             // 1. Insert user
@@ -34,16 +34,16 @@ public class UserService {
             psJob.setString(2, "WELCOME_EMAIL");
             psJob.executeUpdate();
 
-            // ✅ FIX: Both succeeded — commit together
+           
             con.commit();
-            System.out.println("✅ User registered and job created successfully");
+            System.out.println("User registered and job created successfully");
 
         } catch (SQLException e) {
-            // ✅ FIX: Something failed — rollback everything
+          
             try {
                 if (con != null) {
                     con.rollback();
-                    System.out.println("❌ Transaction rolled back — nothing was saved");
+                    System.out.println(" Transaction rolled back — nothing was saved");
                 }
             } catch (SQLException rollbackEx) {
                 rollbackEx.printStackTrace();
@@ -53,7 +53,7 @@ public class UserService {
         } finally {
             try { 
                 if (con != null) {
-                    // ✅ FIX: Restore auto-commit and close connection
+                
                     con.setAutoCommit(true);
                     con.close(); 
                 }

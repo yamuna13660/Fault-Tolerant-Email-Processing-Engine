@@ -143,7 +143,7 @@ public class Worker {
                         }
 
                     } catch (Exception e) {
-                        // ⚡ 4. SMART ERROR HANDLING
+                       
                         logger.log(Level.WARNING, "Job " + jobId + " failed: " + e.getMessage());
 
                         // Check if the error is a permanent "Wrong Email" error

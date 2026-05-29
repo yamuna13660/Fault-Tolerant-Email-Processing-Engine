@@ -73,7 +73,7 @@ public class Worker {
 
             String fetchJobs =
                     "SELECT * FROM (" +
-                    "  SELECT j.id AS job_id, u.name, u.email, j.retry_count, j.email_sent, j.processing_started_at " +
+                   "  SELECT j.id AS job_id, u.name, u.email, j.type, j.retry_count, j.email_sent, j.processing_started_at " + 
                     "  FROM jobs j JOIN users u ON j.user_id = u.id " +
                     "  WHERE j.status = 'PENDING' " +
                     "     OR (j.status = 'PROCESSING' AND j.processing_started_at < SYSTIMESTAMP - NUMTODSINTERVAL(?, 'SECOND'))" +
@@ -87,6 +87,7 @@ public class Worker {
                     int jobId = rs.getInt("job_id");
                     String name = rs.getString("name");
                     String email = rs.getString("email");
+                    String jobType = rs.getString("type"); 
                     int retryCount = rs.getInt("retry_count");
                     int emailSent = rs.getInt("email_sent");
 
@@ -112,7 +113,17 @@ public class Worker {
 }*/
                         // 2. SEND EMAIL
                         if (emailSent == 0) {
-                            sendEmail(email, "Welcome", "Hi " + name);
+                            if (jobType.equals("WELCOME_EMAIL")) {
+        sendEmail(email, "Welcome to AlgoMate!", 
+            "Hi " + name + ",\n\nWelcome! Start solving DSA problems today.");
+    
+    } else if (jobType.equals("PASSWORD_RESET")) {
+        sendEmail(email, "Password Reset Request", 
+            "Hi " + name + ",\n\nClick here to reset your password: http://algomate.com/reset");
+    
+    } else {
+        logger.warning("Unknown job type: " + jobType + " for job " + jobId);
+    }
                             try (PreparedStatement psEmailSent = con.prepareStatement(
                                     "UPDATE jobs SET email_sent=1 WHERE id=?")) {
                                 psEmailSent.setInt(1, jobId);

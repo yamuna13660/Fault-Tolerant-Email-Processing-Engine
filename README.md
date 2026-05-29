@@ -22,7 +22,12 @@ Key Engineering Features
 ###  Retry & Failure Handling
 - Jobs retry automatically up to a configurable limit
 - After max retries, jobs are marked as `FAILED`
-
+  
+## Atomic Job Creation
+* User registration and job creation wrapped in single transaction
+* If job creation fails, user insert is rolled back
+* Ensures a user without a job can never exist in the system
+  
 ###  Observability & Metrics
 - Each job execution logs:
   - Processing time
